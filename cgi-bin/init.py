@@ -11,7 +11,7 @@ create table users
 	salt TEXT,
 	session_id TEXT,
 	session_expiry TEXT,
-	id INTEGER not null
+	id INTEGER
 )
 ;
 
@@ -23,8 +23,6 @@ create unique index users_id_uindex
 
 ''')
 
-# Insert a row of data
-c.execute("INSERT INTO stocks VALUES ('2006-01-05','BUY','RHAT',100,35.14)")
 
 # Save (commit) the changes
 conn.commit()
