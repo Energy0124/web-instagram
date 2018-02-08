@@ -1,10 +1,9 @@
 #!/usr/bin/env python3
+import os
 import sqlite3
 from http import cookies
 
-import os
-
-from cgi_helper import print_header
+from .cgi_helper import print_header
 
 print_header()
 with open('cgi-bin/index.html', 'r') as myfile:

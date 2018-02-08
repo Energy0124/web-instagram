@@ -2,8 +2,9 @@
 import cgi
 import cgitb
 import sqlite3
-from cgi_helper import *
 from http import cookies
+
+from .cgi_helper import *
 
 cgitb.enable()
 

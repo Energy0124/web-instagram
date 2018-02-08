@@ -1,10 +1,12 @@
 #!/usr/bin/env python3
 import cgi
 import cgitb
+import hashlib
 import sqlite3
-from cgi_helper import *
+import uuid
 from http import cookies
-import hashlib, uuid
+
+from .cgi_helper import *
 
 cgitb.enable()
 
