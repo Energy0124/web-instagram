@@ -1,51 +1,6 @@
-import cgi
-import cgitb
-import sqlite3
-from cgi_helper import *
-from http import cookies
+from cgi_helper import print_header
 
-cgitb.enable()
-
-form = cgi.FieldStorage()
-
-
-
-
-if "username" not in form or "password" not in form or "confirm_password" not in form:
-    print_header()
-    print("<H1>Error</H1>")
-    print("Please fill in the username, password and confirm_password fields.")
-else:
-    username = form["username"].value
-    password = form["password"].value
-    confirm_password = form["confirm_password"].value
-    # print("<p>username:", form["username"].value)
-    # print("<p>password:", form["password"].value)
-    # print("<p>confirm_password:", form["confirm_password"].value)
-    if confirm_password == password:
-
-        conn = sqlite3.connect('web-instagram.sqlite')
-        # prepare a cursor object using cursor() method
-        cursor = conn.cursor()
-
-        cursor.execute("SELECT * FROM users WHERE name=?", (username,))
-        result = cursor.fetchall()
-        if len(result) <= 0:
-            session_id = create_user(cursor, username, password)
-            C = cookies.SimpleCookie()
-            C["session_id"] = session_id
-            C["session_id"]["path"] = "/"
-            C["session_id"]["max-age"] = 2147483647
-            print_header(C)
-            print("Successfully registered")
-        else:
-            print_header()
-            print("Username already existed")
-            # Save (commit) the changes
-        conn.commit()
-        # We can also close the connection if we are done with it.
-        # Just be sure any changes have been committed or they will be lost.
-        conn.close()
-    else:
-        print_header()
-        print("password not the same as confirm password")
+print_header()
+with open('cgi-bin/register.html', 'r') as myfile:
+    data=myfile.read()
+print(data)
