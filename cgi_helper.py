@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 def print_header(cookie=None):
     print("Content-Type: text/html")  # HTML is following
     if cookie:
