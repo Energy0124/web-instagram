@@ -163,7 +163,7 @@ venv.bak/
 *.iml
 out
 gen
-.gitignore
+
 .idea/
 
 
