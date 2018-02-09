@@ -8,6 +8,11 @@
 <h1>Web Instagram For Noob</h1>
 <p>Welcome, {0}</p>
 <a href='{1}'>{2}</a>
+{3}
 
+<form action="/cgi-bin/upload.py" method="POST" enctype="multipart/form-data">
+    File: <input name="file" type="file" accept="image/*">
+    <input name="submit" type="submit">
+  </form>
 </body>
 </html>

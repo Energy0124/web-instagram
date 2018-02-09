@@ -1,4 +1,10 @@
 #!/usr/bin/env python
+import os
+import sqlite3
+from http import cookies
+import hashlib, uuid
+
+
 def print_header(cookie=None):
     print("Content-Type: text/html")  # HTML is following
     if cookie:
@@ -6,18 +12,50 @@ def print_header(cookie=None):
     print()  # blank line, end of headers
 
 
+def get_uuid():
+    return uuid.uuid4().hex
+
+
 def create_user(cursor, username, password):
-    import hashlib, uuid
     salt = uuid.uuid4().hex
     hashed_password = hashlib.sha512((password + salt).encode('utf-8')).hexdigest()
     session_id = uuid.uuid4().hex
-    cursor.execute("INSERT INTO users(name, password_hash, salt, session_id, session_expiry) VALUES (?,?,?,?,?)",
-                   (username, hashed_password, salt, session_id, None))
+    cursor.execute("INSERT INTO users(name, password_hash, salt, session_id) VALUES (?,?,?,?)",
+                   (username, hashed_password, salt, session_id))
 
     return session_id
 
 
 def redirect_page():
     print("""
-        <meta http-equiv="refresh" content="5;url=index.py">
+        <meta http-equiv="refresh" content="3;url=index.py">
         """)
+
+
+def get_current_user():
+    """
+get the current logged in user
+
+    :return: row, have session?
+    """
+    http_cookie = os.environ["HTTP_COOKIE"]
+    C = cookies.SimpleCookie()
+    C.load(http_cookie)
+    if "session_id" not in C:
+        return None, False
+    session_id = C["session_id"].value
+    conn = sqlite3.connect('web-instagram.sqlite')
+    conn.row_factory = sqlite3.Row
+    # prepare a cursor object using cursor() method
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM users WHERE session_id=?", (session_id,))
+    result = cursor.fetchone()
+    conn.commit()
+    conn.close()
+    if result is None:
+        return None, True
+    else:
+        return result, True
+
+
+TO_INDEX_IN_SECONDS = "incorrect password or username, redirecting to index in 3 seconds"

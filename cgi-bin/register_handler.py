@@ -17,7 +17,7 @@ if "username" not in form or "password" not in form or "confirm_password" not in
     print_header()
     redirect_page()
     print("<H1>Error</H1>")
-    print("Please fill in the username, password and confirm_password fields, redirecting to index in 5 seconds")
+    print("Please fill in the username, password and confirm_password fields, redirecting to index in 3 seconds")
 else:
     username = form["username"].value
     password = form["password"].value
@@ -41,11 +41,11 @@ else:
             C["session_id"]["max-age"] = 2147483647
             print_header(C)
             redirect_page()
-            print("Successfully registered, redirecting to index in 5 seconds")
+            print("Successfully registered, redirecting to index in 3 seconds")
         else:
             print_header()
             redirect_page()
-            print("Username already existed, redirecting to index in 5 seconds")
+            print("Username already existed, redirecting to index in 3 seconds")
             # Save (commit) the changes
         conn.commit()
         # We can also close the connection if we are done with it.
@@ -54,4 +54,4 @@ else:
     else:
         print_header()
         redirect_page()
-        print("password not the same as confirm password, redirecting to index in 5 seconds")
+        print("password not the same as confirm password, redirecting to index in 3 seconds")

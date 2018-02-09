@@ -16,7 +16,7 @@ if "password" not in form or "new_password" not in form or "confirm_new_password
     print_header()
     redirect_page()
     print("<H1>Error</H1>")
-    print("Please fill in the username and password  fields, redirecting to index in 5 seconds")
+    print("Please fill in the username and password  fields, redirecting to index in 3 seconds")
 else:
     http_cookie = os.environ["HTTP_COOKIE"]
     C = cookies.SimpleCookie()
@@ -25,7 +25,7 @@ else:
         print_header()
         redirect_page()
         print("<H1>Error</H1>")
-        print("Please login first, redirecting to index in 5 seconds")
+        print("Please login first, redirecting to index in 3 seconds")
     else:
         session_id = C["session_id"].value
         new_password = form["new_password"].value
@@ -41,7 +41,7 @@ else:
         if result == None:
             print_header()
             redirect_page()
-            print("invalid session, redirecting to index in 5 seconds")
+            print("invalid session, redirecting to index in 3 seconds")
         else:
             salt = result['salt']
             username = result['name']
@@ -55,16 +55,16 @@ else:
 
                     print_header()
                     redirect_page()
-                    print("Successfully update password, redirecting to index in 5 seconds")
+                    print("Successfully update password, redirecting to index in 3 seconds")
 
                 else:
                     print_header()
                     redirect_page()
-                    print_header("incorrect confirm password, redirecting to index in 5 seconds")
+                    print("incorrect confirm password, redirecting to index in 3 seconds")
             else:
                 print_header()
                 redirect_page()
-                print("incorrect password, redirecting to index in 5 seconds")
+                print("incorrect password, redirecting to index in 3 seconds")
 
         conn.commit()
         # We can also close the connection if we are done with it.

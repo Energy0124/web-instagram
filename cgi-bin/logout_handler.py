@@ -32,7 +32,7 @@ else:
     if result == None:
         print_header()
         redirect_page()
-        print("invalid session, redirecting to index in 5 seconds")
+        print("invalid session, redirecting to index in 3 seconds")
     else:
         username = result['name']
         cursor.execute("UPDATE users SET session_id = ? WHERE name = ?", (None, username,))
@@ -42,7 +42,7 @@ else:
         C["session_id"]["max-age"] = -1
         print_header(C)
         redirect_page()
-        print("logout successfully, redirecting to index in 5 seconds")
+        print("logout successfully, redirecting to index in 3 seconds")
 
     conn.commit()
     # We can also close the connection if we are done with it.
