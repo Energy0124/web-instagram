@@ -1,6 +1,7 @@
 #!/usr/bin/env pythonchmod u+x
 from http.server import HTTPServer, CGIHTTPRequestHandler
-import webbrowser
+
+
 
 
 class Handler(CGIHTTPRequestHandler):

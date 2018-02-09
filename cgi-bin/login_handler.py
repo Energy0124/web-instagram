@@ -6,7 +6,7 @@ import sqlite3
 import uuid
 from http import cookies
 
-from .cgi_helper import *
+from cgi_helper import *
 
 cgitb.enable()
 

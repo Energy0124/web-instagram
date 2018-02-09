@@ -4,7 +4,7 @@ import cgitb
 import sqlite3
 from http import cookies
 
-from .cgi_helper import *
+from cgi_helper import *
 
 cgitb.enable()
 
