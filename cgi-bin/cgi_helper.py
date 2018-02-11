@@ -75,6 +75,10 @@ def get_images(uid=-1):
     return result
 
 
+def clamp(n, minn, maxn):
+    return max(min(maxn, n), minn)
+
+
 def get_current_user():
     """
 get the current logged in user
