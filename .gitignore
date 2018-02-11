@@ -170,3 +170,5 @@ gen
 cgi-bin/noob-count.txt
 
 web-instagram.sqlite
+
+upload/*
