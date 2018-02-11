@@ -1,17 +1,12 @@
 #!/usr/bin/env python3
 import cgi
 import cgitb
-import sqlite3
-from http import cookies
 
 from cgi_helper import *
 
 cgitb.enable()
 
 form = cgi.FieldStorage()
-
-
-
 
 if "username" not in form or "password" not in form or "confirm_password" not in form:
     print_header()

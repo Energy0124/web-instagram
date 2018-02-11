@@ -7,7 +7,7 @@ conn = sqlite3.connect('web-instagram.sqlite')
 c = conn.cursor()
 # Create table
 c.execute('''
-create table users
+CREATE TABLE users
 (
 	name TEXT,
 	password_hash TEXT,
@@ -20,11 +20,10 @@ create table users
 ''')
 
 c.execute('''
-create unique index users_id_uindex
-	on users (id)
+CREATE UNIQUE INDEX users_id_uindex
+	ON users (id)
 ;
 ''')
-
 
 # Save (commit) the changes
 conn.commit()

@@ -1,8 +1,26 @@
 #!/usr/bin/env python
+import hashlib
 import os
 import sqlite3
+import uuid
 from http import cookies
-import hashlib, uuid
+
+conn = None
+
+
+def get_cursor():
+    global conn
+    conn = sqlite3.connect('web-instagram.sqlite')
+    conn.row_factory = sqlite3.Row
+    # prepare a cursor object using cursor() method
+    cursor = conn.cursor()
+    return cursor
+
+
+def close_db(connection=conn):
+    if connection:
+        connection.commit()
+        connection.close()
 
 
 def print_header(cookie=None):
@@ -30,6 +48,31 @@ def redirect_page():
     print("""
         <meta http-equiv="refresh" content="3;url=index.py">
         """)
+
+
+def get_cookie(key):
+    http_cookie = os.environ["HTTP_COOKIE"]
+    C = cookies.SimpleCookie()
+    C.load(http_cookie)
+    if key not in C:
+        return None
+    value = C[key].value
+    return value
+
+
+def get_images(uid=-1):
+    connection = sqlite3.connect('web-instagram.sqlite')
+    connection.row_factory = sqlite3.Row
+    # prepare a cursor object using cursor() method
+    cursor = connection.cursor()
+    if uid >= 0:
+        cursor.execute("SELECT * FROM images WHERE uid=? OR private=0 ORDER BY created DESC ", (uid,))
+    else:
+        cursor.execute("SELECT * FROM images WHERE private=0 ORDER BY created DESC ")
+    result = cursor.fetchall()
+    connection.commit()
+    connection.close()
+    return result
 
 
 def get_current_user():

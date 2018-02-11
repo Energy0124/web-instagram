@@ -2,10 +2,9 @@
 from http.server import HTTPServer, CGIHTTPRequestHandler
 
 
-
-
 class Handler(CGIHTTPRequestHandler):
     cgi_directories = ["/cgi-bin"]
+
 
 PORT = 8080
 

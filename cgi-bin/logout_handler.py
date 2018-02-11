@@ -1,8 +1,5 @@
 #!/usr/bin/env python3
 import cgitb
-import os
-import sqlite3
-from http import cookies
 
 from cgi_helper import *
 
@@ -11,10 +8,6 @@ cgitb.enable()
 http_cookie = os.environ["HTTP_COOKIE"]
 C = cookies.SimpleCookie()
 C.load(http_cookie)
-
-
-
-
 
 if "session_id" not in C:
     print_header()

@@ -1,21 +1,12 @@
 #!/usr/bin/env python3
 import cgi
 import cgitb
-import hashlib
-import sqlite3
-import uuid
-from http import cookies
 
 from cgi_helper import *
-
-
 
 cgitb.enable()
 
 form = cgi.FieldStorage()
-
-
-
 
 if "username" not in form or "password" not in form:
     print_header()
