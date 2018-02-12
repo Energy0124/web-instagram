@@ -60,6 +60,14 @@ def get_cookie(key):
     return value
 
 
+def get_clear_cookie():
+    C = cookies.SimpleCookie()
+    C["session_id"] = ""
+    C["session_id"]["path"] = "/"
+    C["session_id"]["max-age"] = -1
+    return C
+
+
 def get_images(uid=-1):
     connection = sqlite3.connect('web-instagram.sqlite')
     connection.row_factory = sqlite3.Row

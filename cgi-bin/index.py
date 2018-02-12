@@ -5,6 +5,15 @@ from math import ceil
 
 from cgi_helper import *
 
+upload_form = """
+<form action="/cgi-bin/upload.py" method="POST" enctype="multipart/form-data">
+    File: <input name="file" type="file" accept="image/gif, image/jpeg, image/png">
+    <input type="radio" name="private" value="1"> Private
+    <input type="radio" name="private" value="0" checked> Public
+    <input name="submit" type="submit">
+</form>
+"""
+
 
 def generate_image_list_and_pagination(images_rows):
     images_count = len(images_rows)
@@ -37,7 +46,7 @@ def generate_image_list_and_pagination(images_rows):
 
 
 cgitb.enable()
-print_header()
+
 with open('cgi-bin/' + str(os.path.basename(__file__)).split('.')[0] + ".html", 'r') as myfile:
     data = myfile.read()
 images_html = ""
@@ -51,17 +60,24 @@ else:
 user, have_session = get_current_user()
 
 if not have_session:
+    print_header()
     images = get_images()
     images_html, bar_html = generate_image_list_and_pagination(images)
-    data = data.format("Visitor", "login.py", "Login", "<a href='register.py'>Register</a>", images_html, bar_html)
+    data = data.format("Visitor", "login.py", "Login", "<a href='register.py'>Register</a>", images_html, bar_html, "")
 else:
     if user:
+        print_header()
         username = user['name']
         uid = user['id']
         images = get_images(uid)
         images_html, bar_html = generate_image_list_and_pagination(images)
-        data = data.format(username, "logout_handler.py", "Logout", "", images_html, bar_html)
+        data = data.format(username, "logout_handler.py", "Logout", "", images_html, bar_html, upload_form)
     else:
-        print("invalid session")
-        exit(0)
+        # invalid session, clear the cookie
+        C = get_clear_cookie()
+        print_header(C)
+        images = get_images()
+        images_html, bar_html = generate_image_list_and_pagination(images)
+        data = data.format("Visitor", "login.py", "Login", "<a href='register.py'>Register</a>", images_html, bar_html,
+                           "")
 print(data)

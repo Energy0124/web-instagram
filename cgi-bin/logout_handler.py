@@ -22,17 +22,15 @@ else:
 
     cursor.execute("SELECT * FROM users WHERE session_id=?", (session_id,))
     result = cursor.fetchone()
-    if result == None:
-        print_header()
+    if result is None:
+        C = get_clear_cookie()
+        print_header(C)
         redirect_page()
         print("invalid session, redirecting to index in 3 seconds")
     else:
         username = result['name']
         cursor.execute("UPDATE users SET session_id = ? WHERE name = ?", (None, username,))
-        C = cookies.SimpleCookie()
-        C["session_id"] = ""
-        C["session_id"]["path"] = "/"
-        C["session_id"]["max-age"] = -1
+        C = get_clear_cookie()
         print_header(C)
         redirect_page()
         print("logout successfully, redirecting to index in 3 seconds")

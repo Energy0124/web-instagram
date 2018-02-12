@@ -38,8 +38,9 @@ else:
 
         cursor.execute("SELECT * FROM users WHERE session_id=?", (session_id,))
         result = cursor.fetchone()
-        if result == None:
-            print_header()
+        if result is None:
+            C = get_clear_cookie()
+            print_header(C)
             redirect_page()
             print("invalid session, redirecting to index in 3 seconds")
         else:
