@@ -16,20 +16,20 @@ WEB_UPLOAD_DIR = '/upload'
 with open('cgi-bin/' + str(os.path.basename(__file__)).split('.')[0] + ".html", 'r') as myfile:
     data = myfile.read()
 
+img_html = "<img src='{0}'>"
 user, have_session = get_current_user()
 if not have_session:
     print_header()
-    data = data.format("Please login first")
+    data = data.format("Please login first","")
 else:
     if user:
         print_header()
-        username = user["name"]
-        data = data.format("Uploaded successfully, " + username)
+
     else:
         C = get_clear_cookie()
         print_header(C)
         # data = data.format("Invalid session.")
-        data = data.format("Please login first")
+        data = data.format("Please login first","")
 
 form = cgi.FieldStorage()
 if not 'file' in form:
@@ -85,4 +85,7 @@ else:
                 INSERT INTO images(name, path, uid, private) VALUES (?,?,?,?)
                 """, (image_name, web_file_path, uid, privateImage))
                 close_db(cursor.connection)
+                username = user["name"]
+                img_html= img_html.format(web_file_path)
+                data = data.format("Uploaded successfully, " + username, img_html)
                 print(data)
