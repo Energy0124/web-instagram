@@ -2,6 +2,7 @@
 import cgi
 import cgitb
 import re
+import shutil
 import subprocess
 from pathlib import Path
 
@@ -149,6 +150,15 @@ def editor():
                    <meta http-equiv="refresh" content="0;url=index.py">
                    """)
             return
+        elif operation == "finish":
+            shutil.copy(next_file_path, original_file_path)
+            for p in Path(UPLOAD_DIR).glob(os.path.splitext(image_name)[0] + '-*' + file_extension):
+                p.unlink()
+
+            print("""
+                   <meta http-equiv="refresh" content='0;url=save.py?image={}'>
+                   """.format(image_name))
+            return
         img_html = img_html.format(web_file_path)
 
         filter_html = """
@@ -166,15 +176,15 @@ def editor():
         if status <= 0:
             operation_html = """
              <a href='editor.py?image={}&operation=discard&status={}'>Discard</a>      
-             <a href='save.py?image={}'>Finish</a>      
-                   """.format(image_name, status, image_name, )
+             <a href='editor.py?image={}&operation=finish&status={}'>Finish</a>         
+                   """.format(image_name, status, image_name, status)
         else:
             operation_html = """
                              <a href='editor.py?image={}&operation=undo&status={}'>Undo</a>      
                              <a href='editor.py?image={}&operation=discard&status={}'>Discard</a>     
-                              <a href='save.py?image={}'>Finish</a>      
+                              <a href='editor.py?image={}&operation=finish&status={}'>Finish</a>      
 
-                    """.format(image_name, pre_status, image_name, status, image_name, )
+                    """.format(image_name, pre_status, image_name, status, image_name, status)
         data = data.format(message, img_html, filter_html, operation_html)
         print(data)
 
