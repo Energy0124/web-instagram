@@ -3,17 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <title>Register</title>
+
+    <link rel="stylesheet" type="text/css" href="../style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
 <body>
 <form action="register_handler.py" method="post">
 
+    <h1>Register</h1>
     <label for="username"><b>Username</b></label>
     <input type="text" placeholder="Enter Username" name="username" id="username" required>
+    <br>
 
     <label for="password"><b>Password</b></label>
     <input type="password" placeholder="Enter Password" name="password" id="password" required>
+    <br>
+
     <label for="confirm_password"><b>Confirm Password</b></label>
     <input type="password" placeholder="Retype Password" name="confirm_password" id="confirm_password" required>
+    <br>
+
     <button type="submit">Register</button>
 
 

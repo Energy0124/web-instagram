@@ -6,3 +6,11 @@
     max-width: 200px;
     max-height: 200px;
 }
+
+.edit {
+    margin: 5px;
+    height: auto;
+    width: auto;
+    max-width: 800px;
+    max-height: 800px;
+}

@@ -113,4 +113,33 @@ get the current logged in user
         return result, True
 
 
+def image_exist(image_name):
+    cursor = get_cursor()
+    cursor.execute("""
+                SELECT  * FROM images WHERE name=?
+                """, (image_name,))
+    result = cursor.fetchone()
+
+    close_db(cursor.connection)
+    if result:
+        return result
+    else:
+        return False
+
+
+def image_belongs_to(image_name, username):
+    cursor = get_cursor()
+    cursor.execute("""
+                   SELECT  * FROM images JOIN users ON uid=users.id
+                   WHERE  images.name=? AND users.name=?
+                   """, (image_name,))
+    result = cursor.fetchone()
+
+    close_db(cursor.connection)
+    if result:
+        return result
+    else:
+        return False
+
+
 TO_INDEX_IN_SECONDS = "incorrect password or username, redirecting to index in 3 seconds"

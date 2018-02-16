@@ -20,8 +20,11 @@ def generate_image_list_and_pagination(images_rows):
     images_rows = images_rows[8 * (page - 1):8 * (page)]
     images_list = ""
     images_list += "<div>"
-    for image in images_rows:
+    for count, image in enumerate(images_rows, start=1):
         images_list += "<a href='" + image["path"] + "'><img src='" + image["path"] + "' class='thumb'></a>"
+        if count % 4 == 0:
+            images_list += "<br>"
+
     images_list += "</div>"
     previous_page = clamp(page - 1, 1, ceil(images_count / 8))
     next_page = clamp(page + 1, 1, ceil(images_count / 8))
@@ -71,7 +74,8 @@ else:
         uid = user['id']
         images = get_images(uid)
         images_html, bar_html = generate_image_list_and_pagination(images)
-        data = data.format(username, "logout_handler.py", "Logout", "", images_html, bar_html, upload_form)
+        data = data.format(username, "logout_handler.py", "Logout", "<a href='update_password.py'>Change Password</a>",
+                           images_html, bar_html, upload_form)
     else:
         # invalid session, clear the cookie
         C = get_clear_cookie()

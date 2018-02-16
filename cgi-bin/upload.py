@@ -1,10 +1,7 @@
 #!/usr/bin/env python3
 import cgi
 import cgitb
-
 import re
-import shutil
-
 import subprocess
 
 from cgi_helper import *
@@ -16,11 +13,11 @@ WEB_UPLOAD_DIR = '/upload'
 with open('cgi-bin/' + str(os.path.basename(__file__)).split('.')[0] + ".html", 'r') as myfile:
     data = myfile.read()
 
-img_html = "<img src='{0}'>"
+img_html = "<img src='{0}' class='thumb'>"
 user, have_session = get_current_user()
 if not have_session:
     print_header()
-    data = data.format("Please login first","")
+    data = data.format("Please login first", "")
 else:
     if user:
         print_header()
@@ -29,7 +26,7 @@ else:
         C = get_clear_cookie()
         print_header(C)
         # data = data.format("Invalid session.")
-        data = data.format("Please login first","")
+        data = data.format("Please login first", "")
 
 form = cgi.FieldStorage()
 if not 'file' in form:
@@ -86,6 +83,9 @@ else:
                 """, (image_name, web_file_path, uid, privateImage))
                 close_db(cursor.connection)
                 username = user["name"]
-                img_html= img_html.format(web_file_path)
-                data = data.format("Uploaded successfully, " + username, img_html)
+                img_html = img_html.format(web_file_path)
+
+                edit_html = """<a href='editor.py?image={0}'>Go To Editor</a>""".format(image_name)
+
+                data = data.format("Uploaded successfully, " + username, img_html, edit_html)
                 print(data)
