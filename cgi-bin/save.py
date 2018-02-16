@@ -40,9 +40,17 @@ def save():
             print('<h1>Invalid parameter: image not exist or not belong to you</h1>')
             return
         img_html = img_html.format(image["path"])
-        data = data.format(message, img_html, "")
+
+        refer = os.environ.get("HTTP_REFERER", "")
+        if refer:
+            host = refer.split('/')[2]
+            part1 = refer.split('/')[0]
+            host = part1 + "//" + host
+        else:
+            host = ""
+        url = host + image["path"]
+        data = data.format(message, img_html, url)
         print(data)
-        print(os.environ["SERVER_NAME"] + ":" + os.environ["SERVER_PORT"])
 
 
 save()
