@@ -151,7 +151,8 @@ def editor():
                    """)
             return
         elif operation == "finish":
-            shutil.copy(next_file_path, original_file_path)
+            if not next_file_path == original_file_path:
+                shutil.copy(next_file_path, original_file_path)
             for p in Path(UPLOAD_DIR).glob(os.path.splitext(image_name)[0] + '-*' + file_extension):
                 p.unlink()
 
