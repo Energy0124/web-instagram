@@ -7,8 +7,8 @@ import subprocess
 from cgi_helper import *
 
 cgitb.enable()
-UPLOAD_DIR = './upload'
-WEB_UPLOAD_DIR = '/upload'
+# UPLOAD_DIR = './upload'
+# WEB_UPLOAD_DIR = '/upload'
 
 with open('cgi-bin/' + str(os.path.basename(__file__)).split('.')[0] + ".html", 'r') as myfile:
     data = myfile.read()

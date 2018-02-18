@@ -234,3 +234,4 @@ def delete_all_images():
 
 TO_INDEX_IN_SECONDS = "incorrect password or username, redirecting to index in 3 seconds"
 UPLOAD_DIR = './upload'
+WEB_UPLOAD_DIR = '/upload'

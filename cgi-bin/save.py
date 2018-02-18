@@ -7,8 +7,7 @@ from cgi_helper import *
 
 def save():
     cgitb.enable()
-    UPLOAD_DIR = './upload'
-    WEB_UPLOAD_DIR = '/upload'
+
     message = ""
     with open('cgi-bin/' + str(os.path.basename(__file__)).split('.')[0] + ".html", 'r') as myfile:
         data = myfile.read()
