@@ -1,13 +1,12 @@
 #!/usr/bin/env python3
-import cgi
 import cgitb
-import time
-import os
 import html
+import os
+import time
 
 cgitb.enable()
 
-hit_count_path = os.path.join(os.path.dirname(__file__), "noob-count.txt")
+hit_count_path = os.path.join(os.path.dirname(__file__), "count.txt")
 
 if os.path.isfile(hit_count_path):
     hit_count = int(open(hit_count_path).read())
@@ -35,7 +34,7 @@ html = """
   Date: {0}
   </p>
   <p>
-  Noob count: {1}
+  count: {1}
   </p>
 </body>
 </html>

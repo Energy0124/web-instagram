@@ -167,9 +167,10 @@ gen
 .idea/
 
 
-cgi-bin/noob-count.txt
+
 
 web-instagram.sqlite
 
 upload/*
 /upload - Copy/
+!/upload/.keep

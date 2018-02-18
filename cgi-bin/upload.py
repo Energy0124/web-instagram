@@ -58,6 +58,7 @@ else:
             image_name = get_uuid() + file_extension
             uploaded_file_path = os.path.join(UPLOAD_DIR, image_name)
             web_file_path = WEB_UPLOAD_DIR + "/" + image_name
+            os.makedirs(os.path.dirname(uploaded_file_path), exist_ok=True)
             with open(uploaded_file_path, 'wb') as fout:
                 while True:
                     chunk = form_file.file.read(100000)
