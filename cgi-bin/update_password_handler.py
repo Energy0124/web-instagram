@@ -1,10 +1,6 @@
 #!/usr/bin/env python3
 import cgi
 import cgitb
-import hashlib
-import os
-import sqlite3
-from http import cookies
 
 from cgi_helper import *
 
@@ -17,6 +13,7 @@ if "password" not in form or "new_password" not in form or "confirm_new_password
     redirect_page()
     print("<H1>Error</H1>")
     print("Please fill in the username and password  fields, redirecting to index in 3 seconds")
+    print("<a href='index.py'>Home</a>")
 else:
     http_cookie = os.environ["HTTP_COOKIE"]
     C = cookies.SimpleCookie()
@@ -26,6 +23,7 @@ else:
         redirect_page()
         print("<H1>Error</H1>")
         print("Please login first, redirecting to index in 3 seconds")
+        print("<a href='index.py'>Home</a>")
     else:
         session_id = C["session_id"].value
         new_password = form["new_password"].value
@@ -57,15 +55,18 @@ else:
                     print_header()
                     redirect_page()
                     print("Successfully update password, redirecting to index in 3 seconds")
+                    print("<a href='index.py'>Home</a>")
 
                 else:
                     print_header()
                     redirect_page()
                     print("incorrect confirm password, redirecting to index in 3 seconds")
+                    print("<a href='index.py'>Home</a>")
             else:
                 print_header()
                 redirect_page()
                 print("incorrect password, redirecting to index in 3 seconds")
+                print("<a href='index.py'>Home</a>")
 
         conn.commit()
         # We can also close the connection if we are done with it.

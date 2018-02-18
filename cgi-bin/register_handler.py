@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import cgi
 import cgitb
+import html
 
 from cgi_helper import *
 
@@ -13,8 +14,10 @@ if "username" not in form or "password" not in form or "confirm_password" not in
     redirect_page()
     print("<H1>Error</H1>")
     print("Please fill in the username, password and confirm_password fields, redirecting to index in 3 seconds")
+    print("<a href='index.py'>Home</a>")
 else:
     username = form["username"].value
+    username = html.escape(username)
     password = form["password"].value
     confirm_password = form["confirm_password"].value
     # print("<p>username:", form["username"].value)
@@ -37,10 +40,12 @@ else:
             print_header(C)
             redirect_page()
             print("Successfully registered, redirecting to index in 3 seconds")
+            print("<a href='index.py'>Home</a>")
         else:
             print_header()
             redirect_page()
             print("Username already existed, redirecting to index in 3 seconds")
+            print("<a href='index.py'>Home</a>")
             # Save (commit) the changes
         conn.commit()
         # We can also close the connection if we are done with it.
@@ -50,3 +55,4 @@ else:
         print_header()
         redirect_page()
         print("password not the same as confirm password, redirecting to index in 3 seconds")
+        print("<a href='index.py'>Home</a>")

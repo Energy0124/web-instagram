@@ -27,6 +27,7 @@ else:
         print_header(C)
         redirect_page()
         print("invalid session, redirecting to index in 3 seconds")
+        print("<a href='index.py'>Home</a>")
     else:
         username = result['name']
         cursor.execute("UPDATE users SET session_id = ? WHERE name = ?", (None, username,))
@@ -34,6 +35,7 @@ else:
         print_header(C)
         redirect_page()
         print("logout successfully, redirecting to index in 3 seconds")
+        print("<a href='index.py'>Home</a>")
 
     conn.commit()
     # We can also close the connection if we are done with it.

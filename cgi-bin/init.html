@@ -2,27 +2,34 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Login</title>
-
+    <title>Initialization</title>
     <link rel="stylesheet" type="text/css" href="../style.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
 </head>
 <body>
-<form action="login_handler.py" method="post">
-    <h1>Login</h1>
+<h1>Initialization</h1>
+<p>{0}
+</p><br>
 
-    <label for="username"><b>Username</b></label>
-    <input type="text" placeholder="Enter Username" name="username" id="username" required>
-    <br>
+{1}
+<form action="init_handler.py" method="post">
+
+    <h1>Enter the password for Admin account</h1>
 
     <label for="password"><b>Password</b></label>
     <input type="password" placeholder="Enter Password" name="password" id="password" required>
     <br>
-    <button type="submit">Login</button>
 
+    <label for="confirm_password"><b>Confirm Password</b></label>
+    <input type="password" placeholder="Retype Password" name="confirm_password" id="confirm_password" required>
+    <br>
+
+    <button type="submit">Confirm</button>
 
 </form>
+{2}
 <a href="index.py">Home</a>
 </body>
 </html>

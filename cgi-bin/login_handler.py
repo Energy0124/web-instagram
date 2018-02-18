@@ -13,6 +13,7 @@ if "username" not in form or "password" not in form:
     redirect_page()
     print("<H1>Error</H1>")
     print("Please fill in the username and password  fields, redirecting to index in 3 seconds")
+    print("<a href='index.py'>Home</a>")
 else:
     username = form["username"].value
     password = form["password"].value
@@ -40,7 +41,7 @@ else:
             print_header(C)
             redirect_page()
             print("Successfully login, redirecting to index in 3 seconds")
-
+            print("<a href='index.py'>Home</a>")
             conn.commit()
             # We can also close the connection if we are done with it.
             # Just be sure any changes have been committed or they will be lost.
@@ -49,7 +50,9 @@ else:
             print_header()
             redirect_page()
             print(TO_INDEX_IN_SECONDS)
+            print("<a href='index.py'>Home</a>")
     else:
         print_header()
         redirect_page()
         print(TO_INDEX_IN_SECONDS)
+        print("<a href='index.py'>Home</a>")

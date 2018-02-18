@@ -5,6 +5,8 @@ import sqlite3
 import uuid
 from http import cookies
 
+from pathlib import Path
+
 conn = None
 
 
@@ -142,4 +144,93 @@ def image_belongs_to(image_name, username):
         return False
 
 
+def reset_all_tables():
+    conn = sqlite3.connect('web-instagram.sqlite')
+    c = conn.cursor()
+    c.execute('''
+DROP TABLE IF EXISTS images;
+''')
+    c.execute('''
+DROP TABLE IF EXISTS users;
+''')
+    # Create table
+    c.execute('''
+CREATE TABLE "users"
+(
+    name TEXT,
+    password_hash TEXT,
+    salt TEXT,
+    session_id TEXT,
+    session_expiry DATETIME,
+    id INTEGER PRIMARY KEY AUTOINCREMENT
+);
+
+''')
+    c.execute('''
+CREATE UNIQUE INDEX users_id_uindex ON "users" (id);
+''')
+    c.execute('''
+CREATE TABLE "images"
+(
+    name TEXT,
+    path TEXT,
+    uid INTEGER,
+    created DATETIME DEFAULT current_timestamp,
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    private BOOLEAN DEFAULT 0,
+    CONSTRAINT images_users_id_fk FOREIGN KEY (uid) REFERENCES users (id)
+);
+''')
+    c.execute('''
+CREATE UNIQUE INDEX images_id_uindex ON images (id);
+''')
+    # Save (commit) the changes
+    conn.commit()
+    # We can also close the connection if we are done with it.
+    # Just be sure any changes have been committed or they will be lost.
+    conn.close()
+
+
+# reset_table()
+def clear_images_db():
+    conn = sqlite3.connect('web-instagram.sqlite')
+    c = conn.cursor()
+    c.execute('''
+    DROP TABLE IF EXISTS images;
+    ''')
+
+    c.execute('''
+    CREATE TABLE "images"
+    (
+        name TEXT,
+        path TEXT,
+        uid INTEGER,
+        created DATETIME DEFAULT current_timestamp,
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        private BOOLEAN DEFAULT 0,
+        CONSTRAINT images_users_id_fk FOREIGN KEY (uid) REFERENCES users (id)
+    );
+    ''')
+    c.execute('''
+    CREATE UNIQUE INDEX images_id_uindex ON images (id);
+    ''')
+    # Save (commit) the changes
+    conn.commit()
+    # We can also close the connection if we are done with it.
+    # Just be sure any changes have been committed or they will be lost.
+    conn.close()
+
+
+def delete_all_images():
+    for p in Path(UPLOAD_DIR).glob('*.jpg'):
+        p.unlink()
+    for p in Path(UPLOAD_DIR).glob('*.jpeg'):
+        p.unlink()
+    for p in Path(UPLOAD_DIR).glob('*.png'):
+        p.unlink()
+    for p in Path(UPLOAD_DIR).glob('*.gif'):
+        p.unlink()
+
+
 TO_INDEX_IN_SECONDS = "incorrect password or username, redirecting to index in 3 seconds"
+UPLOAD_DIR = './upload'

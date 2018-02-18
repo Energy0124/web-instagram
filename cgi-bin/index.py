@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import cgi
 import cgitb
+import html
 from math import ceil
 
 from cgi_helper import *
@@ -50,6 +51,14 @@ def generate_image_list_and_pagination(images_rows):
 
 cgitb.enable()
 
+cursor = get_cursor()
+cursor.execute("""SELECT name FROM sqlite_master WHERE type='table' AND name='users';""")
+result = cursor.fetchone()
+if not result:
+    print_header()
+    print("<h1>Please initialize system first</h1><a href='/init.html'>Init</a>")
+    exit(0)
+
 with open('cgi-bin/' + str(os.path.basename(__file__)).split('.')[0] + ".html", 'r') as myfile:
     data = myfile.read()
 images_html = ""
@@ -71,6 +80,7 @@ else:
     if user:
         print_header()
         username = user['name']
+        username = html.escape(username)
         uid = user['id']
         images = get_images(uid)
         images_html, bar_html = generate_image_list_and_pagination(images)

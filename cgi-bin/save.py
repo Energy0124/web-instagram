@@ -31,6 +31,8 @@ def save():
     form = cgi.FieldStorage()
     if 'image' not in form:
         print('<h1>Not found parameter: image</h1>')
+        print("<a href='index.py'>Home</a>")
+
         return
     else:
         image_name = form['image'].value

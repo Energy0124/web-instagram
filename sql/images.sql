@@ -3,7 +3,7 @@ CREATE TABLE "images"
     name TEXT,
     path TEXT,
     uid INTEGER,
-    created DATETIME DEFAULT current_time,
+    created DATETIME DEFAULT current_timestamp,
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     private BOOLEAN DEFAULT 0,
     CONSTRAINT images_users_id_fk FOREIGN KEY (uid) REFERENCES users (id)

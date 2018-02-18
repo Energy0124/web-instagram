@@ -31,15 +31,20 @@ else:
 form = cgi.FieldStorage()
 if not 'file' in form:
     print('<h1>Not found parameter: file</h1>')
+    print("<a href='index.py'>Home</a>")
+
 else:
     form_file = form['file']
     if not form_file.file:
         print('<h1>Not found parameter: file</h1>')
+        print("<a href='index.py'>Home</a>")
     elif not form_file.filename:
         print('<h1>Not found parameter: file</h1>')
+        print("<a href='index.py'>Home</a>")
     else:
         if not 'private' in form:
-            print('<h1>Not found parameter: private</h1>')
+            # print('<h1>Not found parameter: private</h1>')
+            # print("<a href='index.py'>Home</a>")
             privateImage = False
         else:
             privateImage = form['private'].value
@@ -47,6 +52,7 @@ else:
         regex_result = pattern.fullmatch(os.path.basename(form_file.filename))
         if regex_result is None:
             print('<h1>invalid filename</h1>')
+            print("<a href='index.py'>Home</a>")
         else:
             file_extension = os.path.splitext(form_file.filename)[1].lower()
             image_name = get_uuid() + file_extension
@@ -67,15 +73,19 @@ else:
             if image_type not in ["JPEG", "GIF", "PNG"]:
                 os.remove(uploaded_file_path)
                 print('<h1>invalid file type</h1>')
+                print("<a href='index.py'>Home</a>")
             elif image_type == "JPEG" and file_extension not in [".jpg", ".jpeg"]:
                 os.remove(uploaded_file_path)
                 print('<h1>invalid file type</h1>')
+                print("<a href='index.py'>Home</a>")
             elif image_type == "GIF" and file_extension != ".gif":
                 os.remove(uploaded_file_path)
                 print('<h1>invalid file type</h1>')
+                print("<a href='index.py'>Home</a>")
             elif image_type == "PNG" and file_extension != ".png":
                 os.remove(uploaded_file_path)
                 print('<h1>invalid file type</h1>')
+                print("<a href='index.py'>Home</a>")
             else:
                 cursor = get_cursor()
                 cursor.execute("""
@@ -85,7 +95,8 @@ else:
                 username = user["name"]
                 img_html = img_html.format(web_file_path)
 
-                edit_html = """<a href='editor.py?image={0}'>Go To Editor</a>""".format(image_name)
+                edit_html = """<a href='editor.py?image={0}'>Go To Editor</a><br>
+                <a href='save.py?image={0}'>Save</a> """.format(image_name)
 
                 data = data.format("Uploaded successfully, " + username, img_html, edit_html)
                 print(data)
